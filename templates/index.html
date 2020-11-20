@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="application/javascript">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="shortcut icon" href="">
+    <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+    <title>Scanner</title>
+      <!-- IOS specific stuff -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/Images/icon-96.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Flask PWA">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- manifest which google chrome supports -->
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+      <!-- service worker stuff -->
+
+    <style>
+      .container {
+        max-width: 1000px;
+      }
+    </style>
+  </head>
+  <body>
+  <div class="topnav">
+      <a class="active" href="/">Home</a>
+      <a href="/static/pages/search.html">Common EULA + Privacy Policy</a>
+      <a href="/anotherpage.html">Another page</a>
+  </div>
+
+    <div class="container">
+      <h1>Network Scanner</h1>
+      <form role="form" method='POST' action='/'>
+        <div class="form-group">
+          <input type="text" name="test" class="form-control" id="test-box" placeholder="Enter Default Gateway Address..." style="max-width: 300px;" autofocus required>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      <br>
+      <button class="btn btn-default" id="installButton">Install!</button>
+      <button id="askLocation" class="btn btn-success">Request location permission</button>
+      <button id='push-btn'>Enable Push Notifications</button>
+      <br>
+      {% for error in errors %}
+        <h4>{{ error }}</h4>
+      {% endfor %}
+        {% for result in results %}
+        <h4>{{ result['ip'], result['mac'] }}</h4>
+      {% endfor %}
+    </div>
+
+
+    <script type="application/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/8.1.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="/__/firebase/8.1.1/firebase-analytics.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+  </body>
+</html>

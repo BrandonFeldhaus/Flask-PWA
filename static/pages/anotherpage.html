@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>Another Page</title>
+</head>
+<body>
+      <div class="topnav">
+      <a class="active" href="/">Home</a>
+      <a href="/static/pages/search.html">Common EULA + Privacy Policy</a>
+      <a href="/static/pages/anotherpage.html">Another page</a>
+    </div>
+
+        {% for result in results %}
+        <h4>{{ result }}</h4>
+      {% endfor %}
+</body>
+</html>
