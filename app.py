@@ -22,6 +22,7 @@ def main_page():
         try:
             target_ip = request.form['url']
             results = get_ips(target_ip)
+            print("hello this is the results")
         except:
             errors.append("unable to get url...")
 
