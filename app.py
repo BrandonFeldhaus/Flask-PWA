@@ -1,7 +1,10 @@
 import os
+
 from flask import Flask, make_response, send_from_directory
 from flask import render_template, request
 from find_mac import get_ips
+from scraper import parse
+
 import requests
 
 app = Flask(__name__)
@@ -49,18 +52,26 @@ Content-type is there to eliminate a MIME error
 def sw():
     return app.send_static_file('service-worker.js'), 200, {'Content-Type': 'text/javascript'}
 
+'''
+'''
 
 @app.route('/anotherpage.html', methods=['GET', 'POST'])
-def test():
+def scrape():
     errors = []
-    results = []
+    results = ""
+    print("im here")
     if request.method == "POST":
+        print('it posted')
         try:
-            target_ip = request.form['test']
-            results = get_ips(target_ip)
+            target_url = request.form['urlname']
+            results = parse(target_url)
+            # Doesnt work because geckodriver needs to be installed
+            print("Results: " + results)
+            print("hello")
         except:
-            errors.append("unable to get url...")
-    return render_template('anotherpageTest.html', results=results)
+            errors.append("unable to scrape text...")
+
+    return render_template('anotherpage.html', errors=errors, results=results)
 
 
 '''
@@ -69,4 +80,4 @@ I found debug mode will reload assets if they arent showing changes on local hos
 eliminate certain caches
 '''
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=65, debug=True)
+    app.run()

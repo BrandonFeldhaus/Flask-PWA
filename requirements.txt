@@ -10,3 +10,5 @@ requests==2.25.0
 scapy==2.4.4
 urllib3==1.26.2
 Werkzeug==1.0.1
+beautifulsoup4==4.9.3
+selenium==3.141.0
