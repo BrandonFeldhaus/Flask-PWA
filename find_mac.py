@@ -37,6 +37,7 @@ def get_ips(target):
     packet = ether/arp
 
     result = scapy.all.srp(packet, timeout=3, verbose=0)[0]
+    print("Hiii this is results", result)
     clients = []
     for sent, received in result:
         # for each response, append ip and mac address to `clients` list
