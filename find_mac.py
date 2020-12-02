@@ -1,5 +1,6 @@
 from scapy.all import *
 from scapy.layers.l2 import ARP, Ether
+from scapy.sendrecv import srp
 #import psutil
 import subprocess
 #import netifaces
@@ -35,8 +36,8 @@ def get_ips(target):
     ether = Ether(dst="ff:ff:ff:ff:ff:ff")
     # stack them
     packet = ether/arp
-
-    result = scapy.all.srp(packet, timeout=3, verbose=0)[0]
+    print("UH OHHHH")
+    result = srp(packet, timeout=3, verbose=0)[0]
     print("Hiii this is results", result)
     clients = []
     for sent, received in result:
