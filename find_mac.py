@@ -1,9 +1,8 @@
 from scapy.all import *
 from scapy.layers.l2 import ARP, Ether
-from scapy.sendrecv import srp
 #import psutil
 import subprocess
-#import netifaces
+import netifaces
 import requests
 
 def get_default_gateway():
@@ -36,9 +35,8 @@ def get_ips(target):
     ether = Ether(dst="ff:ff:ff:ff:ff:ff")
     # stack them
     packet = ether/arp
-    print("UH OHHHH")
-    result = srp(packet, timeout=3, verbose=0)[0]
-    print("Hiii this is results", result)
+
+    result = scapy.all.srp(packet, timeout=3, verbose=0)[0]
     clients = []
     for sent, received in result:
         # for each response, append ip and mac address to `clients` list
@@ -53,12 +51,12 @@ def get_ips(target):
     return clients
 
 def main():
-    get_ips('192.168.0.1/24')
-    #gws = netifaces.gateways()
-    #gateway = gws['default'][netifaces.AF_INET][0]
-    #subnet = gateway+'/24'
-    #print("Gateway name:", get_default_gateway(), '\nGateway IP:', subnet, '\n')
-    #return get_ips(subnet)
+    #get_ips('192.168.0.1/24')
+    gws = netifaces.gateways()
+    gateway = gws['default'][netifaces.AF_INET][0]
+    subnet = gateway+'/24'
+    print("Gateway name:", get_default_gateway(), '\nGateway IP:', subnet, '\n')
+    return get_ips(subnet)
 
 
 if __name__ == '__main__':

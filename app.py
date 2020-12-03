@@ -5,6 +5,7 @@ from flask import render_template, request
 from find_mac import get_ips
 from scraper import parse
 
+
 import requests
 
 app = Flask(__name__)
@@ -22,7 +23,6 @@ def main_page():
         try:
             target_ip = request.form['url']
             results = get_ips(target_ip)
-            print("hello this is the results")
         except:
             errors.append("unable to get url...")
 
@@ -60,19 +60,15 @@ def sw():
 def scrape():
     errors = []
     results = ""
-    print("im here")
     if request.method == "POST":
-        print('it posted')
         try:
             target_url = request.form['urlname']
             results = parse(target_url)
-            # Doesnt work because geckodriver needs to be installed
-            print("Results: " + results)
-            print("hello")
-        except:
-            errors.append("unable to scrape text...")
 
-    return render_template('anotherpage.html', errors=errors, results=results)
+        except:
+            errors.append("unable to get url...")
+
+    return render_template('/anotherpage.html', errors=errors, results=results)
 
 
 '''
