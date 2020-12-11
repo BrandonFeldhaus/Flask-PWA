@@ -1,5 +1,5 @@
 from scapy.all import *
-from scapy.layers.l2 import ARP, Ether
+from scapy.layers.l2 import ARP, Ether,srp
 #import psutil
 import subprocess
 #import netifaces
@@ -36,7 +36,7 @@ def get_ips(target):
     # stack them
     packet = ether/arp
 
-    result = scapy.all.srp(packet, timeout=3, verbose=0)[0]
+    result = srp(packet, timeout=3, verbose=0)[0]
     clients = []
     for sent, received in result:
         # for each response, append ip and mac address to `clients` list
@@ -49,6 +49,25 @@ def get_ips(target):
         print("{:16}    {}      {}".format(client['ip'], client['mac'], client['vendor']))
 
     return clients
+
+
+def handle_arp_packet(packet):
+    who_has = 1
+    is_at = 2
+    # Match ARP requests
+    if packet[ARP].op == who_has:
+        print('New ARP Request')
+        print(packet.summary())
+        #print(ls(packet))
+        print(packet[Ether].src, "has IP", packet[ARP].psrc)
+
+    # Match ARP replies
+    if packet[ARP].op == is_at:
+        print('New ARP Reply')
+        print(packet.summary())
+        #print(ls(packet))
+
+    return
 
 def main():
     get_ips('192.168.0.1/24')

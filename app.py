@@ -4,6 +4,7 @@ from flask import Flask, make_response, send_from_directory
 from flask import render_template, request
 from find_mac import get_ips
 from scraper import parse
+import sys
 
 
 import requests
@@ -24,7 +25,7 @@ def main_page():
             target_ip = request.form['url']
             results = get_ips(target_ip)
         except:
-            errors.append("unable to get url...")
+            errors.append(sys.exc_info()[0])
 
     return render_template('index.html', errors=errors, results=results)
 
